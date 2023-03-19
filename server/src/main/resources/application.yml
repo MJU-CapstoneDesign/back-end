@@ -20,3 +20,8 @@ spring:
   mvc.pathmatch.matching-strategy: ANT_PATH_MATCHER # Swagger-ui
   logging:
     config: classpath:logback-spring.xml
+jwt:
+  header: Bearer
+  secret: ${JWT_SECRET}
+  token-validity-in-seconds: 86400
+  #hs512 algorithm
