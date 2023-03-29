@@ -40,9 +40,8 @@ public class SecurityConfig {
             public void customize(WebSecurity web) {
                 web.ignoring().antMatchers(
                         "/",
-                        "/api/hello",
-                        "/api/authenticate",
-                        "/api/signup",
+                        "/auth/authorize",
+                        "/user/signup",
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
@@ -61,8 +60,8 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/user").hasAnyAuthority("ROLE_USER")
-                .antMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/info").hasAnyAuthority("ROLE_USER")
+                .antMatchers("/info/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .and().build();
     }
 }
