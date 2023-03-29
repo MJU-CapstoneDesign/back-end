@@ -1,6 +1,4 @@
-package com.oauth.auth.oauth;
-
-import com.oauth.auth.oauth.SocialLoginType;
+package com.danram.server.oauth;
 
 public interface SocialOauth {
     /**

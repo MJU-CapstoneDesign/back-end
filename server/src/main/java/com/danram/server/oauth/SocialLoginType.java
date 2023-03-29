@@ -1,4 +1,4 @@
-package com.oauth.auth.oauth;
+package com.danram.server.oauth;
 
 public enum SocialLoginType {
     GOOGLE,
