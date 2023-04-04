@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -23,13 +23,13 @@ public class UserController {
         return ResponseEntity.ok(userService.signUp(userDto));
     }
 
-    @GetMapping("/user")
+    @GetMapping("/info")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<User> getMyUserInf() {
+    public ResponseEntity<User> getMyUserInfo() {
         return ResponseEntity.ok(userService.getUserWithAuthorities().get());
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/info/{username}")
     @PreAuthorize("hasAnyRole('ADMIN')") //user, admin role 두가지를 다 호출할 수 있도록 허용
     public ResponseEntity<User> getUserInfo(@PathVariable String username) {
         return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());

@@ -15,4 +15,17 @@ public class Authority {
     @Id
     @Column(name = "authority_name", columnDefinition = "varchar(512)")
     private String authorityName;
+
+    public String getRole() {
+        if(authorityName.equals("ROLE_USER")) {
+            return "USER";
+        }
+        else if(authorityName.equals("ROLE_ADMIN")) {
+            return "ADMIN";
+        }
+        else
+        {
+            return "error";
+        }
+    }
 }
