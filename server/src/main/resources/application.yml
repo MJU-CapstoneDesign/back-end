@@ -23,7 +23,6 @@ spring:
 jwt:
   header: Bearer
   secret: ${JWT_SECRET}
-  token-validity-in-seconds: ${JWT_TIME}
   #hs256 algorithm
 sns:
   google:
