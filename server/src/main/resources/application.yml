@@ -23,5 +23,14 @@ spring:
 jwt:
   header: Bearer
   secret: ${JWT_SECRET}
-  token-validity-in-seconds: 86400
-  #hs512 algorithm
+  #hs256 algorithm
+sns:
+  google:
+    url: https://accounts.google.com/o/oauth2/v2/auth
+    client:
+      id: ${GOOGLE_CLIENT_ID}
+      secret: ${GOOGLE_CLIENT_SECRET_KEY}
+    callback:
+      url: ${GOOGLE_CALLBACK_URL}
+    token:
+      url: https://oauth2.googleapis.com/token

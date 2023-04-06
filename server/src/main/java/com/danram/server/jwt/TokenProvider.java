@@ -30,10 +30,9 @@ public class TokenProvider implements InitializingBean { //상속 받은 이유�
     private Key key;
 
     public TokenProvider(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+            @Value("${jwt.secret}") String secret) {
         this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+        this.tokenValidityInMilliseconds = 1000 * 60 * 60 * 24 * 3;
     }
 
     @Override
@@ -56,7 +55,7 @@ public class TokenProvider implements InitializingBean { //상속 받은 이유�
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(validity)
                 .compact();
     }
