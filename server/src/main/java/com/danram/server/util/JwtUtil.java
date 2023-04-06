@@ -2,12 +2,17 @@ package com.danram.server.util;
 
 import com.danram.server.domain.Member;
 import com.danram.server.dto.response.MemberIdDto;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,5 +92,20 @@ public class JwtUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static String getAccessToken() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = null;
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            token = authorizationHeader.substring(7);
+        }
+        else
+        {
+            throw new RuntimeException();
+        }
+
+        return token;
     }
 }

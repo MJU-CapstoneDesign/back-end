@@ -3,14 +3,10 @@ package com.danram.server.controller;
 import com.danram.server.domain.Member;
 import com.danram.server.service.member.MemberService;
 import com.danram.server.service.oauth.GoogleLoginService;
+import com.danram.server.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
 
 @Slf4j
 @RestController
@@ -25,14 +21,10 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    //@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<Member> getMyUserInfo(HttpServletRequest httpServletRequest) {
-        String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        String token = header.split(" ")[1];
+    public ResponseEntity<Member> getMyUserInfo() {
+        final String accessToken = JwtUtil.getAccessToken();
 
-        memberService.getInfo(token);
-
-        return ResponseEntity.ok(memberService.getInfo(token));
+        return ResponseEntity.ok(memberService.getInfo(accessToken));
     }
 
     @GetMapping("/info/{username}")
