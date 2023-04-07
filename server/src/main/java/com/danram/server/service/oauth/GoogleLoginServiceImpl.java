@@ -22,7 +22,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     private final MemberRepository memberRepository;
     private final TokensRepository tokensRepository;
     private final MemberNameRepository memberNameRepository;
-    private static final Long ID = 1L;
+    private static Long ID = 1L;
 
     @Override
     public LoginResponseDto generateTokens(Member member) {
@@ -50,7 +50,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
 
         Member member = Member.builder()
                 .name(memberNameRepository.findById(ID).get().getName())
-                .profile(memberNameRepository.findById(ID).get().getImg())
+                .profile(memberNameRepository.findById(ID++).get().getImg())
                 .authorities(Arrays.asList(authority))
                 .build();
         memberRepository.save(member);
