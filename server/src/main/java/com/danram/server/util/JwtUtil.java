@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
     public static String JWT_SECRET_KEY;
-    private static final long EXPIRATION_TIME =  1000 * 60 * 60 * 24 * 3; // 3일
+    private static final long EXPIRATION_TIME =  1000 * 60 * 60 * 24 * 60; // 3일
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365; // 365일
 
     @Value("${jwt.secret}")
