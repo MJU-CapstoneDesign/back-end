@@ -1,6 +1,6 @@
 package com.danram.server.repository;
 
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
