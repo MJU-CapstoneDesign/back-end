@@ -12,4 +12,5 @@ public interface GoogleLoginService {
     public Member signUp();
     public Optional<Member> getUserWithAuthorities();
     public Optional<Member> getUserWithAuthorities(String name);
+    public Long setId(Long id);
 }

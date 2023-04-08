@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/member/info").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/member/info/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/member/change/**").hasAnyAuthority("ROLE_ADMIN")
                 .and().build();
     }
 }
