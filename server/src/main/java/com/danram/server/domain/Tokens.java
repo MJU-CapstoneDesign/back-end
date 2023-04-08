@@ -1,5 +1,6 @@
 package com.danram.server.domain;
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "token_practice")
+@ApiModel(value = "token들을 저장하는 테이블")
 @Getter
 @Setter
 @Builder
