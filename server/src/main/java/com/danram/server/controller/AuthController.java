@@ -1,6 +1,6 @@
 package com.danram.server.controller;
 
-import com.danram.server.domain.Authority;
+import com.danram.server.domain.member.Authority;
 import com.danram.server.service.member.MemberService;
 import com.danram.server.util.JwtUtil;
 import io.swagger.annotations.ApiOperation;

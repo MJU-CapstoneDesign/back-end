@@ -1,4 +1,4 @@
-package com.danram.server.domain;
+package com.danram.server.domain.member;
 
 import io.swagger.annotations.ApiModel;
 import lombok.*;

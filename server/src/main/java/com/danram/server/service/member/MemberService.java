@@ -1,6 +1,6 @@
 package com.danram.server.service.member;
 
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface MemberService{
     public Optional<Member> findMemberByUserId(Long id);
     public Member getInfo(String accessToken);
+    public Long getId(String accessToken);
 }

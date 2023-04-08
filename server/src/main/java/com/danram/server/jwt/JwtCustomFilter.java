@@ -1,7 +1,6 @@
 package com.danram.server.jwt;
 
-import com.danram.server.domain.Authority;
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
 import com.danram.server.dto.response.MemberIdDto;
 import com.danram.server.service.member.MemberService;
 import com.danram.server.util.JwtUtil;
@@ -12,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -20,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
