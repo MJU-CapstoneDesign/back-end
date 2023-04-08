@@ -1,6 +1,6 @@
 package com.danram.server.util;
 
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
 import com.danram.server.dto.response.MemberIdDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
     public static String JWT_SECRET_KEY;
-    private static final long EXPIRATION_TIME =  1000 * 60 * 60 * 24 * 60; // 3일
+    private static final long EXPIRATION_TIME =  1000 * 60 * 60 * 24 * 60; // 60일
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 365; // 365일
 
     @Value("${jwt.secret}")

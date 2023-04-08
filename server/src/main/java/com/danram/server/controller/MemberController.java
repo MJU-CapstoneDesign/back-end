@@ -1,6 +1,6 @@
 package com.danram.server.controller;
 
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
 import com.danram.server.service.member.MemberService;
 import com.danram.server.service.oauth.GoogleLoginService;
 import com.danram.server.util.JwtUtil;

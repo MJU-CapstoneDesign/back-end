@@ -1,50 +1,34 @@
 package com.danram.server.controller;
 
-import com.danram.server.dto.LoginDto;
-import com.danram.server.dto.TokenDto;
-import com.danram.server.jwt.JwtFilter;
-import com.danram.server.jwt.TokenProvider;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import com.danram.server.domain.member.Authority;
+import com.danram.server.service.member.MemberService;
+import com.danram.server.util.JwtUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final MemberService memberService;
 
-    public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-    }
-
-    @PostMapping("/authorize")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-
-        //로그인 정보를 바탕으로 authentication 객체 생성
-        //authenticate 실행 시 loaduser 실행
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        //인증 정보를 securityContext에 저장
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        //jwt 토큰 생
-        String jwt = tokenProvider.createToken(authentication);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+    @GetMapping("/info")
+    @ApiOperation("사용자 권한 확인 api")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity<List<Authority>> getAuthorities() {
+        return ResponseEntity.ok(memberService.getInfo(JwtUtil.getAccessToken()).getAuthorities());
     }
 }

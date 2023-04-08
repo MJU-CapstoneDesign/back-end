@@ -1,4 +1,4 @@
-package com.danram.server.domain;
+package com.danram.server.domain.member;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Entity
