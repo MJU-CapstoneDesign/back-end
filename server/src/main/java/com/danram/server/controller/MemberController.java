@@ -31,4 +31,9 @@ public class MemberController {
     public ResponseEntity<Member> getUserInfo(@PathVariable String username) {
         return ResponseEntity.ok(googleLoginService.getUserWithAuthorities(username).get());
     }
+
+    @GetMapping("/change/{id}")
+    public Long changeId(@RequestParam(name = "id") Long id) {
+        return googleLoginService.setId(id);
+    }
 }
