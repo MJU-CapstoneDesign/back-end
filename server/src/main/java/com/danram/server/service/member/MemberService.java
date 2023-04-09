@@ -8,6 +8,7 @@ import java.util.Optional;
 @Service
 public interface MemberService{
     public Optional<Member> findMemberByUserId(Long id);
+    public Member findMemberById(Long id);
     public Member getInfo(String accessToken);
     public Long getId(String accessToken);
 }

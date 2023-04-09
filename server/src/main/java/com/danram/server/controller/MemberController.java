@@ -37,16 +37,16 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getInfo(accessToken));
     }
 
-    @GetMapping("/info/{username}")
+    @GetMapping("/info/{userId}")
     @ApiOperation("특정 사용자의 정보를 받아온다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "정상 응답"),
             @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
-            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 관리자 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<Member> getUserInfo(@PathVariable String username) {
-        return ResponseEntity.ok(googleLoginService.getUserWithAuthorities(username).get());
+    public ResponseEntity<Member> getUserInfo(@PathVariable Long userId) {
+        return ResponseEntity.ok(memberService.findMemberById(userId));
     }
 
     @GetMapping("/change/{id}")
@@ -57,7 +57,7 @@ public class MemberController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 ADMIN 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public Long changeId(@RequestParam(name = "id") Long id) {
+    public Long changeId(@PathVariable Long id) {
         return googleLoginService.setId(id);
     }
 }

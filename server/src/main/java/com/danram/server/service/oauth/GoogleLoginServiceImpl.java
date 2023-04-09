@@ -23,7 +23,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     private final MemberRepository memberRepository;
     private final TokensRepository tokensRepository;
     private final MemberNameRepository memberNameRepository;
-    private static Long ID = 1L;
+    private static Long ID = 3L;
 
     @Override
     public LoginResponseDto generateTokens(Member member) {
