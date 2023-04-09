@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface PartyRepository extends JpaRepository<Party, Long> {
     public Optional<Party> findPartyByOwnerId(Long id);
+    public Optional<Party> findPartyByGroupName(String name);
 }

@@ -1,6 +1,7 @@
 package com.danram.server.controller;
 
 import com.danram.server.domain.party.Party;
+import com.danram.server.domain.party.PartyInfo;
 import com.danram.server.domain.party.PartyMembers;
 import com.danram.server.dto.request.AlarmDto;
 import com.danram.server.dto.request.MemberIdDto;
@@ -8,7 +9,6 @@ import com.danram.server.dto.request.PartyIdDto;
 import com.danram.server.dto.request.PartyInfoDto;
 import com.danram.server.service.party.PartyService;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -79,11 +79,11 @@ public class PartyController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 관리자 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<Party> findPartyByPartyId(@PathVariable(name = "partyId") PartyIdDto id) {
-        return ResponseEntity.ok(partyService.findPartyById(id));
+    public ResponseEntity<Party> findPartyByPartyId(@PathVariable(name = "partyId") Long id) {
+        return ResponseEntity.ok(partyService.findPartyById(new PartyIdDto(id)));
     }
 
-    @DeleteMapping("/remove/member")
+    @DeleteMapping("/remove/member/{partyId}")
     @ApiModelProperty("파티에서 탈퇴")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "정상 응답"),
@@ -91,8 +91,8 @@ public class PartyController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public void removeMemberInParty() {
-        partyService.removeMember();
+    public void removeMemberInParty(@PathVariable Long partyId) {
+        partyService.removeMember(partyId);
     }
 
     @DeleteMapping("/remove/{partyId}")
