@@ -1,12 +1,12 @@
 package com.danram.server.service.party;
 
-import com.danram.server.domain.member.Member;
 import com.danram.server.domain.party.Party;
 import com.danram.server.domain.party.PartyMembers;
 import com.danram.server.dto.request.AlarmDto;
 import com.danram.server.dto.request.MemberIdDto;
 import com.danram.server.dto.request.PartyIdDto;
 import com.danram.server.dto.request.PartyInfoDto;
+import com.danram.server.exception.party.DuplicatePartyException;
 import com.danram.server.exception.party.PartyNotFoundException;
 import com.danram.server.repository.PartyMembersRepository;
 import com.danram.server.repository.PartyRepository;
@@ -16,10 +16,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,16 +32,21 @@ public class PartyServiceImpl implements PartyService {
     public PartyMembers createParty(final PartyInfoDto partyInfoDto) {
         Long id = memberService.getId(JwtUtil.getAccessToken());
 
+        //중복 체크
+        if(duplicateCheckName(partyInfoDto.getGroupName())) {
+            throw new DuplicatePartyException(partyInfoDto.getGroupName());
+        }
+
         partyRepository.save(Party.of(partyInfoDto, id));
 
-        final Party party = partyRepository.findPartyByOwnerId(id).orElseThrow();
+        final Party party = partyRepository.findPartyByGroupName(partyInfoDto.getGroupName()).orElseThrow();
 
         return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
     }
 
     @Override
     public void deleteParty(final PartyIdDto partyIdDto) {
-        Party target = partyRepository.findById(partyIdDto.getId()).orElseThrow();
+        Party target = partyRepository.findById(partyIdDto.getId()).orElseThrow(() -> new PartyNotFoundException(partyIdDto.getId()));
 
         partyRepository.delete(target);
 
@@ -84,7 +88,7 @@ public class PartyServiceImpl implements PartyService {
 
     @Override
     public Party findPartyById(final PartyIdDto partyIdDto) {
-        return partyRepository.findById(partyIdDto.getId()).orElseThrow();
+        return partyRepository.findById(partyIdDto.getId()).orElseThrow(() -> new PartyNotFoundException(partyIdDto.getId()));
     }
 
     @Override
@@ -102,10 +106,10 @@ public class PartyServiceImpl implements PartyService {
 
     @Transactional
     @Override
-    public void removeMember() {
+    public void removeMember(Long partyId) {
         Long userId = memberService.getId(JwtUtil.getAccessToken());
 
-        partyMembersRepository.deleteByUserId(userId);
+        partyMembersRepository.deleteByPartyIdAndUserId(partyId, userId);
     }
 
     @Override
@@ -115,5 +119,18 @@ public class PartyServiceImpl implements PartyService {
         party.setAlarmTime(alarmDto.getTime());
 
         return partyRepository.save(party);
+    }
+
+    @Override
+    public boolean duplicateCheckName(final String name) {
+        final Optional<Party> result = partyRepository.findPartyByGroupName(name);
+
+        if(result.isEmpty()) {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

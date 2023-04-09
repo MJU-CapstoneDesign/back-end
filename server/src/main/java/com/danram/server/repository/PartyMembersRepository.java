@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface PartyMembersRepository extends JpaRepository<PartyMembers, PartyInfo> {
     public List<PartyMembers> findPartyMembersByUserId(Long id);
-    public void deleteByUserId(Long id);
+    public void deleteByPartyIdAndUserId(Long partyId, Long userId);
     public void deleteByPartyId(Long id);
 }
