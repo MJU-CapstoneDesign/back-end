@@ -61,6 +61,14 @@ public class SecurityConfig {
                 .antMatchers("/member/info").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/member/info/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/member/change/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/party/create").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/party/info").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/party/info/{id}").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/party/myInfo").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/party/info/{partyId}").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/party/remove/member").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/party/remove/{partyId}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/party/modify/alarm").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .and().build();
     }
 }

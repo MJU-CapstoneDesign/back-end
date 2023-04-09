@@ -1,8 +1,8 @@
 package com.danram.server.service.oauth;
 
-import com.danram.server.domain.Authority;
-import com.danram.server.domain.Member;
-import com.danram.server.domain.Tokens;
+import com.danram.server.domain.member.Authority;
+import com.danram.server.domain.member.Member;
+import com.danram.server.domain.member.Tokens;
 import com.danram.server.repository.MemberRepository;
 import com.danram.server.dto.response.LoginResponseDto;
 import com.danram.server.repository.MemberNameRepository;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
@@ -24,7 +23,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     private final MemberRepository memberRepository;
     private final TokensRepository tokensRepository;
     private final MemberNameRepository memberNameRepository;
-    private static Long ID = 1L;
+    private static Long ID = 3L;
 
     @Override
     public LoginResponseDto generateTokens(Member member) {

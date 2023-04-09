@@ -1,6 +1,7 @@
 package com.danram.server.service.member;
 
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
+import com.danram.server.exception.member.MemberNotFoundException;
 import com.danram.server.repository.MemberRepository;
 import com.danram.server.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member findMemberById(Long id) {
+        return memberRepository.findMemberByUserId(id).orElseThrow(() -> new MemberNotFoundException(id));
+    }
+
+    @Override
     public Member getInfo(String accessToken) {
-        return memberRepository.findMemberByUserId(JwtUtil.getMemberId(accessToken).getId()).orElseThrow();
+        final Long id = JwtUtil.getMemberId(accessToken).getId();
+
+        return memberRepository.findMemberByUserId(id).orElseThrow(() -> new MemberNotFoundException(id));
+    }
+
+    @Override
+    public Long getId(String accessToken) {
+        return getInfo(accessToken).getUserId();
     }
 }

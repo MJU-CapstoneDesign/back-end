@@ -1,6 +1,6 @@
 package com.danram.server.dto.response;
 
-import com.danram.server.domain.Member;
+import com.danram.server.domain.member.Member;
 import com.danram.server.util.JwtUtil;
 import lombok.Builder;
 import lombok.Getter;
