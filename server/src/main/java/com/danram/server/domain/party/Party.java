@@ -38,6 +38,10 @@ public class Party {
     @ApiModelProperty(example = "모임 이름")
     private String groupName;
 
+    @Column(name = "party_img", columnDefinition = "text")
+    @ApiModelProperty(example = "파티 사진")
+    private String partyImg;
+
     @Column(name = "description", columnDefinition = "text")
     @ApiModelProperty(example = "상세 글")
     private String description;
@@ -83,6 +87,7 @@ public class Party {
                 .ownerId(id)
                 .groupType(partyInfoDto.getGroupType())
                 .groupName(partyInfoDto.getGroupName())
+                .partyImg(partyInfoDto.getPartyImg())
                 .description(partyInfoDto.getDescription())
                 .location(partyInfoDto.getLocation())
                 .max(partyInfoDto.getMax())
