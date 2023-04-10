@@ -13,6 +13,7 @@ import java.util.Date;
 public class PartyInfoDto {
     private String groupType; // 모집 타입
     private String groupName; // 모임 이름
+    private String partyImg; // 파티 사진
     private String description; // 모집 상세 글
     private Long max; // 모집 최대 인원
     private String startAt; // 시작알
