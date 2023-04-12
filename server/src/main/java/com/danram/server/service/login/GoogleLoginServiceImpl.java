@@ -1,4 +1,4 @@
-package com.danram.server.service.oauth;
+package com.danram.server.service.login;
 
 import com.danram.server.domain.member.Authority;
 import com.danram.server.domain.member.Member;
