@@ -69,6 +69,7 @@ public class SecurityConfig {
                 .antMatchers("/party/remove/member").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/party/remove/{partyId}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/party/modify/alarm").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/fcm/api/fcm").hasAnyAuthority("ROLE_ADMIN")
                 .and().build();
     }
 }
