@@ -65,7 +65,9 @@ public class JwtUtil {
         return expiredDate.before(new Date());
     }
 
-    public static MemberIdDto getMemberId(String token) {
+    public static MemberIdDto getMemberId() {
+        String token = JwtUtil.getAccessToken();
+
         Claims body = Jwts.parserBuilder()
                 .setSigningKey(JWT_SECRET_KEY)
                 .build()

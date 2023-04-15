@@ -58,7 +58,7 @@ public class JwtCustomFilter extends OncePerRequestFilter {
         }
 
         // 유저 식별
-        MemberIdDto memberIdDto = JwtUtil.getMemberId(token);
+        MemberIdDto memberIdDto = JwtUtil.getMemberId();
 
         Optional<Member> member = memberService.findMemberByUserId(memberIdDto.getId());
 

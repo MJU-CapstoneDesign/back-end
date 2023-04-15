@@ -64,6 +64,10 @@ public class PartyServiceImpl implements PartyService {
         List<PartyMembers> result = partyMembersRepository.findPartyMembersByUserId(userId); // 자신이 속한 파티 정보들
         List<Party> parties = new ArrayList<>();
 
+        if(result.isEmpty()){
+            return parties;
+        }
+
         for(PartyMembers i : result) {
             parties.add(partyRepository.findById(i.getPartyId()).orElseThrow());
         }
