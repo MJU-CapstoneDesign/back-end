@@ -11,4 +11,7 @@ public interface MemberService{
     public Member findMemberById(Long id);
     public Member getInfo(String accessToken);
     public Long getId(String accessToken);
+    public Member changeName(String name);
+    public Member changeProfileImg(String img);
+    public void deleteAccount();
 }
