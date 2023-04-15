@@ -3,7 +3,7 @@ package com.danram.server.controller;
 import com.danram.server.domain.member.Member;
 import com.danram.server.dto.response.LoginResponseDto;
 import com.danram.server.oauth.SocialLoginType;
-import com.danram.server.service.oauth.GoogleLoginService;
+import com.danram.server.service.login.GoogleLoginService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

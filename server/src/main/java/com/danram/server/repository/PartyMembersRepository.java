@@ -12,4 +12,5 @@ public interface PartyMembersRepository extends JpaRepository<PartyMembers, Part
     public List<PartyMembers> findPartyMembersByUserId(Long id);
     public void deleteByPartyIdAndUserId(Long partyId, Long userId);
     public void deleteByPartyId(Long id);
+    public void deleteByUserId(Long id);
 }

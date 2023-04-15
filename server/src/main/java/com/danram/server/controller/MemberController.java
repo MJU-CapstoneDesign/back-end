@@ -2,7 +2,7 @@ package com.danram.server.controller;
 
 import com.danram.server.domain.member.Member;
 import com.danram.server.service.member.MemberService;
-import com.danram.server.service.oauth.GoogleLoginService;
+import com.danram.server.service.login.GoogleLoginService;
 import com.danram.server.util.JwtUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -59,5 +59,44 @@ public class MemberController {
     })
     public Long changeId(@PathVariable Long id) {
         return googleLoginService.setId(id);
+    }
+
+    @GetMapping("/name/{name}")
+    @ApiOperation("닉네임 변경")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity<Member> changeName(@PathVariable String name) {
+        log.info("called >> change name");
+        return ResponseEntity.ok(memberService.changeName(name));
+    }
+
+    @GetMapping("/profile/{img}")
+    @ApiOperation("프로필 사진을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity<Member> changeProfileImg(@PathVariable String img) {
+        return ResponseEntity.ok(memberService.changeProfileImg(img));
+    }
+
+    @GetMapping("/delete")
+    @ApiOperation("회원 탈퇴")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity deleteAccount() {
+        memberService.deleteAccount();
+
+        return ResponseEntity.ok().build();
     }
 }

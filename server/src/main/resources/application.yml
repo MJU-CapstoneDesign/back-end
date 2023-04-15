@@ -34,3 +34,7 @@ sns:
       url: ${GOOGLE_CALLBACK_URL}
     token:
       url: https://oauth2.googleapis.com/token
+fcm:
+  projectId: ${PROJECT_ID}
+  url: ${API_URL}
+  config: ${FCM_CONFIG}
