@@ -18,7 +18,6 @@ import java.util.List;
 public class Member {
     @Id
     @Column(name = "user_id", columnDefinition = "int")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(example = "고유 식별 ID")
     private Long userId;
 
