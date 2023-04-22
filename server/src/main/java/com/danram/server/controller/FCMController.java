@@ -1,7 +1,7 @@
 package com.danram.server.controller;
 
 import com.danram.server.dto.FCMDto;
-import com.danram.server.service.fcm.FCMService;
+import com.danram.server.service.firebase.FCMService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

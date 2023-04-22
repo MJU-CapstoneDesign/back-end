@@ -1,7 +1,5 @@
-package com.danram.server.service.fcm;
+package com.danram.server.service.firebase;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

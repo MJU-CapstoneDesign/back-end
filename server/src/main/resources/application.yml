@@ -38,3 +38,5 @@ fcm:
   projectId: ${PROJECT_ID}
   url: ${API_URL}
   config: ${FCM_CONFIG}
+firebase:
+  bucket: ${FIREBASE_BUCKET}

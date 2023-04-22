@@ -1,4 +1,4 @@
-package com.danram.server.service.fcm;
+package com.danram.server.service.firebase;
 
 import com.danram.server.dto.FcmMessage;
 import com.danram.server.service.member.MemberService;
