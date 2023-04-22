@@ -1,6 +1,7 @@
 package com.danram.server.controller;
 
 import com.danram.server.domain.member.Member;
+import com.danram.server.service.firebase.FirestoreService;
 import com.danram.server.service.member.MemberService;
 import com.danram.server.service.login.GoogleLoginService;
 import com.danram.server.util.JwtUtil;
@@ -10,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -17,10 +21,12 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final GoogleLoginService googleLoginService;
     private final MemberService memberService;
+    private final FirestoreService firestoreService;
 
-    public MemberController(final GoogleLoginService googleLoginService, final MemberService memberService) {
+    public MemberController(final GoogleLoginService googleLoginService, final MemberService memberService, final FirestoreService firestoreService) {
         this.googleLoginService = googleLoginService;
         this.memberService = memberService;
+        this.firestoreService = firestoreService;
     }
 
     @GetMapping("/info")
@@ -74,7 +80,7 @@ public class MemberController {
         return ResponseEntity.ok(memberService.changeName(name));
     }
 
-    @GetMapping("/profile/{img}")
+    @PostMapping("/profile/img")
     @ApiOperation("프로필 사진을 변경한다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "정상 응답"),
@@ -82,7 +88,13 @@ public class MemberController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<Member> changeProfileImg(@PathVariable String img) {
+    public ResponseEntity<Member> changeProfileImg(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            throw new RuntimeException("File is not exist");
+        }
+
+        final String img = firestoreService.uploadFiles(file, file.getOriginalFilename());
+
         return ResponseEntity.ok(memberService.changeProfileImg(img));
     }
 
