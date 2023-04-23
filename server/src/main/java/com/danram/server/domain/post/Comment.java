@@ -31,6 +31,6 @@ public class Comment {
     private String content;
 
     @Column(name = "created_at", columnDefinition = "datetime")
-    @ApiModelProperty(example = "생성 날")
+    @ApiModelProperty(example = "생성 날짜")
     private LocalDateTime createdAt;
 }

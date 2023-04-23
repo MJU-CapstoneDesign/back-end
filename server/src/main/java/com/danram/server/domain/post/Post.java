@@ -1,11 +1,14 @@
 package com.danram.server.domain.post;
 
+import com.danram.server.dto.request.PostDto;
+import com.danram.server.util.JwtUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "post")
@@ -37,4 +40,13 @@ public class Post {
     @Column(name = "created_at", columnDefinition = "datetime")
     @ApiModelProperty(example = "생성 날짜")
     private LocalDateTime createdAt;
+
+    public static Post of(PostDto postDto) {
+        return Post.builder()
+                .memberId(JwtUtil.getMemberId().getId())
+                .content(postDto.getContent())
+                .img(postDto.getImg())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 }
