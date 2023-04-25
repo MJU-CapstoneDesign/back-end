@@ -2,12 +2,14 @@ package com.danram.server.service.party;
 
 import com.danram.server.domain.party.Party;
 import com.danram.server.domain.party.PartyMembers;
+import com.danram.server.domain.post.Feed;
 import com.danram.server.dto.request.AlarmDto;
 import com.danram.server.dto.request.MemberIdDto;
 import com.danram.server.dto.request.PartyIdDto;
 import com.danram.server.dto.request.PartyInfoDto;
 import com.danram.server.exception.party.DuplicatePartyException;
 import com.danram.server.exception.party.PartyNotFoundException;
+import com.danram.server.repository.FeedRepository;
 import com.danram.server.repository.PartyMembersRepository;
 import com.danram.server.repository.PartyRepository;
 import com.danram.server.service.member.MemberService;
@@ -27,6 +29,7 @@ public class PartyServiceImpl implements PartyService {
     private final PartyRepository  partyRepository;
     private final MemberService memberService;
     private final PartyMembersRepository partyMembersRepository;
+    private final FeedRepository feedRepository;
 
     @Override
     public PartyMembers createParty(final PartyInfoDto partyInfoDto) {
@@ -40,6 +43,8 @@ public class PartyServiceImpl implements PartyService {
         partyRepository.save(Party.of(partyInfoDto, id));
 
         final Party party = partyRepository.findPartyByGroupName(partyInfoDto.getGroupName()).orElseThrow();
+
+        feedRepository.save(Feed.of(party.getPartyId()));
 
         return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
     }

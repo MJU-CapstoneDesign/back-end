@@ -73,6 +73,9 @@ public class SecurityConfig {
                 .antMatchers("/party/remove/{partyId}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/party/modify/alarm").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/fcm/api/fcm").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/feed/create/post").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/feed/find/{feedId}", "/feed/delete/{feedId}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/comment/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .and().build();
     }
 }

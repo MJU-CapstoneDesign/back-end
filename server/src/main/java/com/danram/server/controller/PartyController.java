@@ -7,6 +7,7 @@ import com.danram.server.dto.request.AlarmDto;
 import com.danram.server.dto.request.MemberIdDto;
 import com.danram.server.dto.request.PartyIdDto;
 import com.danram.server.dto.request.PartyInfoDto;
+import com.danram.server.service.firebase.FirestoreService;
 import com.danram.server.service.party.PartyService;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,7 +15,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PartyController {
     private final PartyService partyService;
+    private final FirestoreService firestoreService;
 
     @PostMapping("/create")
     @ApiModelProperty("파티 생성 API")
@@ -31,7 +35,15 @@ public class PartyController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<PartyMembers> createParty(PartyInfoDto partyInfoDto) {
+    public ResponseEntity<PartyMembers> createParty(PartyInfoDto partyInfoDto, @RequestParam(value = "file")MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            throw new RuntimeException("File is not exist");
+        }
+
+        final String img = firestoreService.uploadFiles(file, file.getOriginalFilename());
+
+        partyInfoDto.setPartyImg(img);
+
         return ResponseEntity.ok(partyService.createParty(partyInfoDto));
     }
 
