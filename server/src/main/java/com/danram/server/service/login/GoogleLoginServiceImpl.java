@@ -50,6 +50,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
                 .build();
 
         Member member = Member.builder()
+                .userId(ID)
                 .name(memberNameRepository.findById(ID).get().getName())
                 .profile(memberNameRepository.findById(ID++).get().getImg())
                 .authorities(Arrays.asList(authority))

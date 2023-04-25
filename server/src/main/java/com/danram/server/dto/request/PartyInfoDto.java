@@ -18,7 +18,7 @@ public class PartyInfoDto {
     private Long max; // 모집 최대 인원
     private String startAt; // 시작알
     private String endAt; // 종료일
-    private String Location; // 위치(시 구 동)
+    private String location; // 위치(시 구 동)
     private String alarmFrequency; // 알람 빈도(월, 화, 수)
     private String alarmTime; //알람 시간
 }
