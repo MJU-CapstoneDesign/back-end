@@ -1,8 +1,11 @@
 package com.danram.server.domain.post;
 
+import com.danram.server.dto.request.CommentDto;
+import com.danram.server.util.JwtUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,7 +33,20 @@ public class Comment {
     @ApiModelProperty(example = "댓글 내용")
     private String content;
 
+    @Column(name = "parent_comment", columnDefinition = "int")
+    @ApiModelProperty(example = "누구의 댓글인지")
+    private Long parentComment;
+
     @Column(name = "created_at", columnDefinition = "datetime")
     @ApiModelProperty(example = "생성 날짜")
     private LocalDateTime createdAt;
+
+    public static Comment of(CommentDto commentDto) {
+        return Comment.builder()
+                .memberId(JwtUtil.getMemberId().getId())
+                .content(commentDto.getContent())
+                .parentComment(commentDto.getParentComment())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 }
