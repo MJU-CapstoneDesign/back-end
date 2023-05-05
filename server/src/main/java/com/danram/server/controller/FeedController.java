@@ -61,6 +61,18 @@ public class FeedController {
         return ResponseEntity.ok(feedService.findFeed(feedId));
     }
 
+    @GetMapping("/find/post/{postId}")
+    @ApiOperation("post 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity<Post> findPost(@PathVariable Long postId) {
+        return ResponseEntity.ok(postService.findPost(postId));
+    }
+
     @DeleteMapping("/delete/{feedId}")
     @ApiOperation("feed 삭제")
     @ApiResponses({
