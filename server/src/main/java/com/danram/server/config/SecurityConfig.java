@@ -76,6 +76,7 @@ public class SecurityConfig {
                 .antMatchers("/feed/create/post").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/feed/find/{feedId}", "/feed/delete/{feedId}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/comment/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/find/post/{postId}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .and().build();
     }
 }
