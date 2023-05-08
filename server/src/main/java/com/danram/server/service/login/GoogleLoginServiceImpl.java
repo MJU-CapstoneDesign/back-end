@@ -46,7 +46,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     @Transactional
     public Member signUp() {
         Authority authority = Authority.builder()
-                .authorityName("ROLE_ADMIN")
+                .authorityName("ROLE_USER")
                 .build();
 
         Member member = Member.builder()
