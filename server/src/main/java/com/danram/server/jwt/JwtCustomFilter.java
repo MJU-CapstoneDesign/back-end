@@ -37,6 +37,8 @@ public class JwtCustomFilter extends OncePerRequestFilter {
 
         // bearer이 아니면 오류
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            log.info("JWT Token does not begin with Bearer String");
+
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "JWT Token does not begin with Bearer String");
             return;
         }
@@ -46,6 +48,8 @@ public class JwtCustomFilter extends OncePerRequestFilter {
 
         // Token 검증
         if (!JwtUtil.validateToken(token)) {
+            log.info("JWT Token is not valid");
+
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "JWT Token is not valid");
 
             return;
@@ -53,6 +57,8 @@ public class JwtCustomFilter extends OncePerRequestFilter {
 
         // Token 만료 체크
         if (JwtUtil.isExpired(token)) {
+            log.info("JWT is not expired");
+
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT Token is expired");
             return;
         }

@@ -23,7 +23,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     private final MemberRepository memberRepository;
     private final TokensRepository tokensRepository;
     private final MemberNameRepository memberNameRepository;
-    private static Long ID = 3L;
+    private static Long ID = 2L;
 
     @Override
     public LoginResponseDto generateTokens(Member member) {
@@ -46,7 +46,7 @@ public class GoogleLoginServiceImpl implements GoogleLoginService {
     @Transactional
     public Member signUp() {
         Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
+                .authorityName("ROLE_ADMIN")
                 .build();
 
         Member member = Member.builder()
