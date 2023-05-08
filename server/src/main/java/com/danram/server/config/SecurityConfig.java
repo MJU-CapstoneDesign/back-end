@@ -37,7 +37,7 @@ public class SecurityConfig {
             public void customize(WebSecurity web) {
                 web.ignoring().antMatchers(
                         "/",
-                        "/auth/authorize",
+                        "/auth/**",
                         "/user/signup",
                         "/login/**",
                         "/swagger-ui.html",
