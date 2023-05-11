@@ -49,6 +49,18 @@ public class FeedController {
         return ResponseEntity.ok(postService.createPost(partyId, postDto));
     }
 
+    @PostMapping("/create/withoutImg/post")
+    @ApiOperation("feed 생성")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity<Post> createPostWithoutImg(Long partyId, PostDto postDto) {
+        return ResponseEntity.ok(postService.createPost(partyId, postDto));
+    }
+
     @GetMapping("/find/{feedId}")
     @ApiOperation("feed 조회")
     @ApiResponses({
