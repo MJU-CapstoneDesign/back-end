@@ -23,6 +23,8 @@ public class PostServiceImpl implements PostService {
     public Post createPost(Long partyId, PostDto postDto) {
         Post post = Post.of(postDto);
 
+        log.info("partyId: {}", partyId);
+
         final Feed feed = feedRepository.findById(partyId).get();
 
         feed.addPost(post);

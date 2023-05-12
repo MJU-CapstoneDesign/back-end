@@ -3,6 +3,7 @@ package com.danram.server.controller;
 import com.danram.server.domain.post.Feed;
 import com.danram.server.domain.post.Post;
 import com.danram.server.dto.request.PostDto;
+import com.danram.server.dto.request.PostDtoWithId;
 import com.danram.server.service.firebase.FirestoreService;
 import com.danram.server.service.post.FeedService;
 import com.danram.server.service.post.PostService;
@@ -57,8 +58,9 @@ public class FeedController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<Post> createPostWithoutImg(Long partyId, PostDto postDto) {
-        return ResponseEntity.ok(postService.createPost(partyId, postDto));
+    public ResponseEntity<Post> createPostWithoutImg(@RequestBody PostDtoWithId postDtoWithId) {
+
+        return ResponseEntity.ok(postService.createPost(postDtoWithId.getPartyId(), new PostDto(postDtoWithId.getImg(), postDtoWithId.getContent())));
     }
 
     @GetMapping("/find/{feedId}")
