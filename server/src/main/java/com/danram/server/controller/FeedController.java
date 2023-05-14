@@ -35,7 +35,7 @@ public class FeedController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<Post> createPost(@RequestBody PostDtoWithId postDtoWithId, @RequestParam(value = "file") MultipartFile file) throws IOException {
+    public ResponseEntity<Post> createPost(PostDtoWithId postDtoWithId, @RequestParam(value = "file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new RuntimeException("File is not exist");
         }
