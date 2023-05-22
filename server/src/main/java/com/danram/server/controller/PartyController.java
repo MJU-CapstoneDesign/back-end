@@ -35,7 +35,7 @@ public class PartyController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<PartyMembers> createParty(PartyInfoDto partyInfoDto) {
+    public ResponseEntity<PartyMembers> createParty(@RequestBody PartyInfoDto partyInfoDto) {
         return ResponseEntity.ok(partyService.createParty(partyInfoDto));
     }
 
