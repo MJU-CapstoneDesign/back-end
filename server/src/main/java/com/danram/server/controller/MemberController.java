@@ -88,12 +88,7 @@ public class MemberController {
             @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
             @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
     })
-    public ResponseEntity<Member> changeProfileImg(@RequestParam(value = "file") MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            throw new RuntimeException("File is not exist");
-        }
-
-        final String img = firestoreService.uploadFiles(file, file.getOriginalFilename());
+    public ResponseEntity<Member> changeProfileImg(@RequestBody String img) {
 
         return ResponseEntity.ok(memberService.changeProfileImg(img));
     }
