@@ -3,10 +3,7 @@ package com.danram.server.controller;
 import com.danram.server.domain.party.Party;
 import com.danram.server.domain.party.PartyInfo;
 import com.danram.server.domain.party.PartyMembers;
-import com.danram.server.dto.request.AlarmDto;
-import com.danram.server.dto.request.MemberIdDto;
-import com.danram.server.dto.request.PartyIdDto;
-import com.danram.server.dto.request.PartyInfoDto;
+import com.danram.server.dto.request.*;
 import com.danram.server.service.firebase.FirestoreService;
 import com.danram.server.service.party.PartyService;
 import io.swagger.annotations.ApiModelProperty;
@@ -37,6 +34,18 @@ public class PartyController {
     })
     public ResponseEntity<PartyMembers> createParty(@RequestBody PartyInfoDto partyInfoDto) {
         return ResponseEntity.ok(partyService.createParty(partyInfoDto));
+    }
+
+    @PostMapping("/create/without")
+    @ApiModelProperty("이미지 알아서 넣어주는 파티 생성 api")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "정상 응답"),
+            @ApiResponse(responseCode = "404", description = "해당 정보를 가진 Member가 없음"),
+            @ApiResponse(responseCode = "403", description = "해당 사용자가 Member 권한이 아님"),
+            @ApiResponse(responseCode = "401", description = "해당 사용자가 인증되지 않음 | 토큰 만료")
+    })
+    public ResponseEntity<PartyMembers> createParty(@RequestBody PartyInfoImgNotDto partyInfoImgNotDto) {
+        return ResponseEntity.ok(partyService.createParty(partyInfoImgNotDto));
     }
 
     @GetMapping("/info")

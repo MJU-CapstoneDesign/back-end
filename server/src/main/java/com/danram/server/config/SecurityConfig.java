@@ -65,6 +65,7 @@ public class SecurityConfig {
                 .antMatchers("/member/profile/img").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/member/delete").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/party/create").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/party/create/without").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .antMatchers("/party/info").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/party/info/{id}").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/party/myInfo").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
