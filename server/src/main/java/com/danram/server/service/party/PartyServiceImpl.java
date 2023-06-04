@@ -1,6 +1,7 @@
 package com.danram.server.service.party;
 
 import com.danram.server.domain.party.Party;
+import com.danram.server.domain.party.PartyInfo;
 import com.danram.server.domain.party.PartyMembers;
 import com.danram.server.domain.post.Feed;
 import com.danram.server.dto.request.*;
@@ -44,6 +45,12 @@ public class PartyServiceImpl implements PartyService {
 
         feedRepository.save(Feed.of(party.getPartyId()));
 
+        PartyInfo partyInfo = new PartyInfo();
+
+        partyInfo.setPartyId(party.getPartyId());
+        partyInfo.setUserId(id);
+
+        //return partyMembersRepository.findById(partyInfo).orElseThrow();
         return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
     }
 
@@ -92,6 +99,7 @@ public class PartyServiceImpl implements PartyService {
 
         feedRepository.save(Feed.of(party.getPartyId()));
 
+        //return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
         return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
     }
 

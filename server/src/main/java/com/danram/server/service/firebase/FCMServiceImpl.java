@@ -58,8 +58,8 @@ public class FCMServiceImpl implements FCMService {
 
         sendMessageTo(
                 partyId.toString(),
-                partyId + "번 방 알람",
-                memberService.getInfo(JwtUtil.getAccessToken()).getName() + "이 알람을 껐음");
+                partyId.toString(),
+                memberService.getInfo(JwtUtil.getAccessToken()).getName());
     }
 
     private String makeMessage(String topic, String title, String body) throws JsonParseException, JsonProcessingException {
