@@ -2,16 +2,14 @@ package com.danram.server.service.party;
 
 import com.danram.server.domain.party.Party;
 import com.danram.server.domain.party.PartyMembers;
-import com.danram.server.dto.request.AlarmDto;
-import com.danram.server.dto.request.MemberIdDto;
-import com.danram.server.dto.request.PartyIdDto;
-import com.danram.server.dto.request.PartyInfoDto;
+import com.danram.server.dto.request.*;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public interface PartyService {
     public PartyMembers createParty(PartyInfoDto partyInfoDto);
+    public PartyMembers createParty(PartyInfoImgNotDto partyInfoImgNotDto);
     public void deleteParty(PartyIdDto partyIdDto);
     public List<Party> findAll();
     public List<Party> findParty();

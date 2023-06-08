@@ -1,12 +1,10 @@
 package com.danram.server.service.party;
 
 import com.danram.server.domain.party.Party;
+import com.danram.server.domain.party.PartyInfo;
 import com.danram.server.domain.party.PartyMembers;
 import com.danram.server.domain.post.Feed;
-import com.danram.server.dto.request.AlarmDto;
-import com.danram.server.dto.request.MemberIdDto;
-import com.danram.server.dto.request.PartyIdDto;
-import com.danram.server.dto.request.PartyInfoDto;
+import com.danram.server.dto.request.*;
 import com.danram.server.exception.party.DuplicatePartyException;
 import com.danram.server.exception.party.PartyNotFoundException;
 import com.danram.server.repository.FeedRepository;
@@ -30,6 +28,7 @@ public class PartyServiceImpl implements PartyService {
     private final MemberService memberService;
     private final PartyMembersRepository partyMembersRepository;
     private final FeedRepository feedRepository;
+    private final ImgSrc imgSrc = new ImgSrc();
 
     @Override
     public PartyMembers createParty(final PartyInfoDto partyInfoDto) {
@@ -46,6 +45,61 @@ public class PartyServiceImpl implements PartyService {
 
         feedRepository.save(Feed.of(party.getPartyId()));
 
+        PartyInfo partyInfo = new PartyInfo();
+
+        partyInfo.setPartyId(party.getPartyId());
+        partyInfo.setUserId(id);
+
+        //return partyMembersRepository.findById(partyInfo).orElseThrow();
+        return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
+    }
+
+    @Override
+    public PartyMembers createParty(final PartyInfoImgNotDto partyInfoImgNotDto) {
+        Long id = memberService.getId(JwtUtil.getAccessToken());
+
+        //중복 체크
+        if(duplicateCheckName(partyInfoImgNotDto.getGroupName())) {
+            throw new DuplicatePartyException(partyInfoImgNotDto.getGroupName());
+        }
+
+        if(partyInfoImgNotDto.getGroupType().equals("스터디")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getCcding()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("독서")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getReading()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("취미")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getHobby()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("운동/스포츠")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getExercise()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("문화/예술")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getArt()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("생활습관")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getLife()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("여행")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getTravel()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("반려동물")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getAnimal()));
+        }
+        else if(partyInfoImgNotDto.getGroupType().equals("다이어트")) {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getDiet()));
+        }
+        else
+        {
+            partyRepository.save(Party.convert(partyInfoImgNotDto, id, imgSrc.getFree()));
+        }
+
+        final Party party = partyRepository.findPartyByGroupName(partyInfoImgNotDto.getGroupName()).orElseThrow();
+
+        feedRepository.save(Feed.of(party.getPartyId()));
+
+        //return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
         return partyMembersRepository.save(new PartyMembers(party.getPartyId(), id));
     }
 

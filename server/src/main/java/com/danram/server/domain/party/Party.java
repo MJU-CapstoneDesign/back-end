@@ -2,6 +2,7 @@ package com.danram.server.domain.party;
 
 import com.danram.server.domain.member.Member;
 import com.danram.server.dto.request.PartyInfoDto;
+import com.danram.server.dto.request.PartyInfoImgNotDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -70,7 +71,7 @@ public class Party {
     @ApiModelProperty(example = "알람 시간")
     private String alarmTime;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "party_members",
             joinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "party_id")},
@@ -81,7 +82,7 @@ public class Party {
     public static Party of(PartyInfoDto partyInfoDto, Long id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime startAt = LocalDateTime.parse(partyInfoDto.getStartAt(), formatter);
-        LocalDateTime endAt = LocalDateTime.parse(partyInfoDto.getStartAt(), formatter);
+        LocalDateTime endAt = LocalDateTime.parse(partyInfoDto.getEndAt(), formatter);
 
         return Party.builder()
                 .ownerId(id)
@@ -95,6 +96,26 @@ public class Party {
                 .endAt(endAt)
                 .alarmFrequency(partyInfoDto.getAlarmFrequency())
                 .alarmTime(partyInfoDto.getAlarmTime())
+                .build();
+    }
+
+    public static Party convert(PartyInfoImgNotDto partyInfoImgNotDto, Long id, String img) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime startAt = LocalDateTime.parse(partyInfoImgNotDto.getStartAt(), formatter);
+        LocalDateTime endAt = LocalDateTime.parse(partyInfoImgNotDto.getEndAt(), formatter);
+
+        return Party.builder()
+                .ownerId(id)
+                .groupType(partyInfoImgNotDto.getGroupType())
+                .groupName(partyInfoImgNotDto.getGroupName())
+                .partyImg(img)
+                .description(partyInfoImgNotDto.getDescription())
+                .location(partyInfoImgNotDto.getLocation())
+                .max(partyInfoImgNotDto.getMax())
+                .startAt(startAt)
+                .endAt(endAt)
+                .alarmFrequency(partyInfoImgNotDto.getAlarmFrequency())
+                .alarmTime(partyInfoImgNotDto.getAlarmTime())
                 .build();
     }
 }
